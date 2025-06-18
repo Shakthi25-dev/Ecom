@@ -6,12 +6,14 @@ const app = express();
 dotenv.config();
 const port = process.env.PORT;
 
+//Middleware
 app.use(express.json());
-app.use("/uploads", express.static("uploads"));
-
 
 import UserRoutes from "./routes/User.js";
 import ProductRoutes from "./routes/Product.js";
+
+//Static files
+app.use("/uploads", express.static("uploads"));
 
 app.use("/api/", UserRoutes);
 app.use("/api/", ProductRoutes);
