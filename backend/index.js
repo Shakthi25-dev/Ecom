@@ -8,6 +8,7 @@ const port = process.env.PORT;
 
 //Middleware
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 import UserRoutes from "./routes/User.js";
 import ProductRoutes from "./routes/Product.js";
