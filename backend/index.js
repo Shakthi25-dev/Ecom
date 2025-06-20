@@ -15,6 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 import UserRoutes from "./routes/User.js";
 import ProductRoutes from "./routes/Product.js";
 import CartRoutes from "./routes/Cart.js";
+import OrderRoutes from "./routes/Order.js";
 
 //Static files
 app.use("/uploads", express.static("uploads"));
@@ -22,6 +23,7 @@ app.use("/uploads", express.static("uploads"));
 app.use("/api/", UserRoutes);
 app.use("/api/", ProductRoutes);
 app.use("/api/", CartRoutes);
+app.use("/api/", OrderRoutes)
 
 app.listen(port, () => {
     console.log(`Server is running ${port}`);
