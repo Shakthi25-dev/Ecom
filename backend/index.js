@@ -16,6 +16,7 @@ import UserRoutes from "./routes/User.js";
 import ProductRoutes from "./routes/Product.js";
 import CartRoutes from "./routes/Cart.js";
 import OrderRoutes from "./routes/Order.js";
+import PaymentRoutes from "./routes/Payment.js";
 
 //Static files
 app.use("/uploads", express.static("uploads"));
@@ -23,7 +24,8 @@ app.use("/uploads", express.static("uploads"));
 app.use("/api/", UserRoutes);
 app.use("/api/", ProductRoutes);
 app.use("/api/", CartRoutes);
-app.use("/api/", OrderRoutes)
+app.use("/api/", OrderRoutes);
+app.use("/api", PaymentRoutes);
 
 app.listen(port, () => {
     console.log(`Server is running ${port}`);

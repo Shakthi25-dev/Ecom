@@ -1,5 +1,8 @@
 import { Order } from "../models/Order.js";
 import { Cart } from "../models/Cart.js";
+import { User } from "../models/User.js";
+
+//place orders
 
 export const placeOrder = async (req, res) => {
     try {
@@ -21,7 +24,7 @@ export const placeOrder = async (req, res) => {
             totalCost
         });
 
-        //Clear cart
+        //Clear cart after placed
         await cart.deleteOne();
 
         return res.status(201).json({ message: "Order placed successfully", order });
@@ -35,7 +38,7 @@ export const placeOrder = async (req, res) => {
 
 export const getUserOrder = async (req, res) => {
     try {
-        const orders = await order.find({ user: req.login.id }).populate("items.product");
+        const orders = await Order.find({ user: req.login.id }).populate("items.product");
         return res.status(200).json({ message: "Your Orders", orders });
     } catch (error) {
         return res.status(500).json({ message: error.message });

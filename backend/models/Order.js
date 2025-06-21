@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const Schema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "user",
+        ref: "User",
         required: true
     },
     items: [
@@ -25,7 +25,7 @@ const Schema = new mongoose.Schema({
     },
     createdAt: {
         type: Date,
-        default: Data.now
+        default: Date.now
     }
 });
 
