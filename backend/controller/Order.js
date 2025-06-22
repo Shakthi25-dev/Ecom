@@ -14,14 +14,15 @@ export const placeOrder = async (req, res) => {
         }
 
         //Calculate total
-        const totalCost = cart.items.reduce((acc, item) => {
+        const totalAmount = cart.items.reduce((acc, item) => {
             return acc + item.product.price * item.quantity;
         }, 0);
 
         const order = await Order.create({
             user: userId,
             items: cart.items,
-            totalCost
+            totalAmount,
+            status: "Pending"
         });
 
         //Clear cart after placed
@@ -46,7 +47,6 @@ export const getUserOrder = async (req, res) => {
 };
 
 //View orders (Admin)
-
 export const getAllOrders = async (req, res) => {
     try {
         if (req.login.role !== "admin") {
@@ -54,7 +54,7 @@ export const getAllOrders = async (req, res) => {
         }
 
         const orders = await Order.find()
-            .populate("items.product")
+            .populate("items.product", "title price")
             .populate("user", "name email");
 
         return res.status(200).json({
@@ -62,6 +62,28 @@ export const getAllOrders = async (req, res) => {
             orders
         });
 
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+};
+
+//Update status
+export const updateOrderStatus = async (req, res) => {
+    try {
+        if (req.login.role != "admin") {
+            return res.status(403).json({ message: "Unauthorized" });
+        }
+
+        const { status } = req.body;
+
+        const order = await Order.findById(req.params.id);
+        if (!order) return res.status(404).json({ message: "Order not found" });
+
+        order.status = status;
+        await order.save();
+
+        res.status(200).json({ message: "Order status updated", order });
+        
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
