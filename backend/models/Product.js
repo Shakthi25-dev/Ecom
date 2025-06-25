@@ -37,6 +37,13 @@ const Schema = new mongoose.Schema({
         required: true,
     },
 
+    approved: { type: Boolean, default: false },
+    artisan: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+    },
+
     createdAt: {
         type: Date,
         default: Date.now(),
